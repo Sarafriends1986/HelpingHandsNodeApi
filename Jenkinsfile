@@ -47,21 +47,19 @@ node('slave_A') {
 			 sh 'ls -ltr'
 			 sh 'docker ps'
 			 sh ' docker stop helpinghands'
-			 sh ' docker kill helpinghands'
+			 sh ' sleep 5'
+			 #sh ' docker kill helpinghands'
 			 sh ' docker rm helpinghands'
 			 
 		   } else {
 			 sh 'echo "else block..."'
-			 sh ' docker stop helpinghands'
-			 sh ' docker kill helpinghands'
-			 sh ' docker rm helpinghands'
+			 
 		   }
 		   
 		}catch (err) {
 			 sh 'echo "error block..."'
-			 sh ' docker stop helpinghands'
-			 sh ' docker kill helpinghands'
-			 sh ' docker rm helpinghands'
+			echo "Caught: ${err}"
+			currentBuild.result = 'FAILURE'
 	    }
 	  
    }
