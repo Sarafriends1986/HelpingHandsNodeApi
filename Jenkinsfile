@@ -47,8 +47,7 @@ node('slave_A') {
 			 sh 'ls -ltr'
 			 sh 'docker ps'
 			 sh ' docker stop helpinghands'
-			 sh ' sleep 5'
-			 #sh ' docker kill helpinghands'
+			 sh ' sleep 5'			  
 			 sh ' docker rm helpinghands'
 			 
 		   } else {

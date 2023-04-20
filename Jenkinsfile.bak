@@ -58,10 +58,8 @@ node('slave_A') {
 		   
 		}catch (err) {
 			 sh 'echo "error block..."'
-			 sh ' docker stop helpinghands'
-			 sh ' sleep 5'
-			 #sh ' docker kill helpinghands'
-			 sh ' docker rm helpinghands'
+			echo "Caught: ${err}"
+			currentBuild.result = 'FAILURE'
 	    }
 	  
    }
