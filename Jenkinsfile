@@ -10,6 +10,7 @@ node('slave_A') {
 	 sh 'echo "Checkout Code..."'
 	  checkout scm
 	 }catch (err) {
+	  sh 'echo "error block..."'
 	  echo "Caught: ${err}"
 	  currentBuild.result = 'FAILURE'
 	 }
@@ -27,7 +28,7 @@ node('slave_A') {
 			 sh ' docker images'
 			 
 		   } else {
-			  echo "Nothing"
+			  sh 'echo "error block..."'
 		   }
 		   
 		}catch (err) {
@@ -50,7 +51,10 @@ node('slave_A') {
 			 sh ' docker rm helpinghands'
 			 
 		   } else {
-			   echo "Nothing"
+			 sh 'echo "error block..."'
+			 sh ' docker stop helpinghands'
+			 sh ' docker kill helpinghands'
+			 sh ' docker rm helpinghands'
 		   }
 		   
 		}catch (err) {
@@ -71,10 +75,11 @@ node('slave_A') {
 			 sh 'docker ps'
 			 
 		   } else {
-			  echo "Nothing"
+			  sh 'echo "error block..."'
 		   }
 		   
 		}catch (err) {
+		 sh 'echo "error block..."'
 		 echo "Caught: ${err}"
 		 currentBuild.result = 'FAILURE'
 	    }

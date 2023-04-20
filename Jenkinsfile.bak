@@ -23,10 +23,11 @@ node('slave_A') {
 			 sh 'echo "Docker Build..."'
 			 sh 'pwd'
 			 sh 'ls -ltr'
-			 sh 'docker build -t sarafriends1986/scale-utube-micro-node:v_00.00.005 .'
+			 sh 'docker build -t helpinghands .'
+			 sh ' docker images'
 			 
 		   } else {
-			  echo "Nothing"
+			  sh 'echo "error block..."'
 		   }
 		   
 		}catch (err) {
@@ -35,19 +36,24 @@ node('slave_A') {
 	    }
 	  
    }
-   stage('Docker Image Upload') {
+   stage('Docker Stop Container') {
    
 		try {
 		  if (isUnix()) {
 		  
-			 sh 'echo "Docker Image Upload..."'
+			 sh 'echo "Docker Stop Existing Container..."'
 			 sh 'pwd'
 			 sh 'ls -ltr'
-			 sh 'docker images sarafriends1986/scale-utube-micro-node'
-			 sh 'docker push sarafriends1986/scale-utube-micro-node:v_00.00.005'
+			 sh 'docker ps'
+			 sh ' docker stop helpinghands'
+			 sh ' docker kill helpinghands'
+			 sh ' docker rm helpinghands'
 			 
 		   } else {
-			   echo "Nothing"
+			 sh 'echo "error block..."'
+			 sh ' docker stop helpinghands'
+			 sh ' docker kill helpinghands'
+			 sh ' docker rm helpinghands'
 		   }
 		   
 		}catch (err) {
@@ -56,24 +62,23 @@ node('slave_A') {
 	    }
 	  
    }
-   stage('Kubernetes Deployment') {
+   stage('Docker Launch Container') {
    
 		try {
 		  if (isUnix()) {
 		  
-			 sh 'echo "Kubernetes Deployment..."'
+			 sh 'echo "Docker Launch Container..."'
 			 sh 'pwd'
 			 sh 'ls -ltr'
-			 sh 'kubectl get deployments utube-micro-deployment -o wide'
-			 sh 'kubectl set image deployment/utube-micro-deployment utube-micro=sarafriends1986/scale-utube-micro-node:v_00.00.005'
-			 echo "After Deploying new release version to Kubernetes..."
-			 sh 'kubectl get deployments utube-micro-deployment -o wide'
+			 sh 'docker run  --name helpinghands --detach  --publish 7000:7000 helpinghands'
+			 sh 'docker ps'
 			 
 		   } else {
-			  echo "Nothing"
+			  sh 'echo "error block..."'
 		   }
 		   
 		}catch (err) {
+		 sh 'echo "error block..."'
 		 echo "Caught: ${err}"
 		 currentBuild.result = 'FAILURE'
 	    }
