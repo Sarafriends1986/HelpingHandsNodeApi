@@ -10,6 +10,7 @@ node('slave_A') {
 	 sh 'echo "Checkout Code..."'
 	  checkout scm
 	 }catch (err) {
+	  sh 'echo "error block..."'
 	  echo "Caught: ${err}"
 	  currentBuild.result = 'FAILURE'
 	 }

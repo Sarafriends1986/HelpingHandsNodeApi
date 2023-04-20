@@ -51,15 +51,17 @@ node('slave_A') {
 			 sh ' docker rm helpinghands'
 			 
 		   } else {
-			 sh 'echo "error block..."'
+			 sh 'echo "else block..."'
 			 sh ' docker stop helpinghands'
 			 sh ' docker kill helpinghands'
 			 sh ' docker rm helpinghands'
 		   }
 		   
 		}catch (err) {
-		 echo "Caught: ${err}"
-		 currentBuild.result = 'FAILURE'
+			 sh 'echo "error block..."'
+			 sh ' docker stop helpinghands'
+			 sh ' docker kill helpinghands'
+			 sh ' docker rm helpinghands'
 	    }
 	  
    }
